@@ -11,10 +11,12 @@ Public Class frm_gamePFC
         lbl_nomJ.Parent = pb_fond
         lbl_resultat.Parent = pb_fond
         lbl_nomBot.Parent = pb_fond
+        lbl_scores.Parent = pb_fond
         Bot = New Bot("Azylos Bot")
         Jeu = New PFCgame()
-        lbl_nomJ.Text = joueur.Nom()
-        lbl_nomBot.Text = Bot.Nom()
+        lbl_nomJ.Text = joueur.GetNom()
+        lbl_nomBot.Text = Bot.GetNom()
+        lbl_scores.Text = $"Score {joueur.GetNom()} : {joueur.GetScore()} {vbCrLf} Score {Bot.GetNom()} : {Bot.GetScore()}"
     End Sub
 
     Private Sub DemanderNomJoueur()
@@ -31,19 +33,19 @@ Public Class frm_gamePFC
 
     Private Sub btn_pierre_Click(sender As Object, e As EventArgs) Handles btn_pierre.Click
         joueur.Choisir(Choix.Pierre)
-        Jeu.JouerCoupJoueur(joueur.Choix, Bot, lbl_nomBot, lbl_resultat)
-        lbl_nomJ.Text = joueur.Nom + " a choisi : " + joueur.Choix.ToString()
+        Jeu.JouerCoupJoueur(joueur.GetChoix(), joueur, Bot, lbl_nomBot, lbl_resultat, lbl_scores)
+        lbl_nomJ.Text = $"{joueur.GetNom()} a choisi : {joueur.GetChoix()}"
     End Sub
 
     Private Sub btn_feuille_Click(sender As Object, e As EventArgs) Handles btn_feuille.Click
         joueur.Choisir(Choix.Feuille)
-        Jeu.JouerCoupJoueur(joueur.Choix, Bot, lbl_nomBot, lbl_resultat)
-        lbl_nomJ.Text = joueur.Nom() + " a choisi : " + joueur.Choix.ToString()
+        Jeu.JouerCoupJoueur(joueur.GetChoix(), joueur, Bot, lbl_nomBot, lbl_resultat, lbl_scores)
+        lbl_nomJ.Text = $"{joueur.GetNom()} a choisi : {joueur.GetChoix()}"
     End Sub
 
     Private Sub btn_ciseau_Click(sender As Object, e As EventArgs) Handles btn_ciseau.Click
         joueur.Choisir(Choix.Ciseaux)
-        Jeu.JouerCoupJoueur(joueur.Choix, Bot, lbl_nomBot, lbl_resultat)
-        lbl_nomJ.Text = joueur.Nom() + " a choisi : " + joueur.Choix.ToString()
+        Jeu.JouerCoupJoueur(joueur.GetChoix(), joueur, Bot, lbl_nomBot, lbl_resultat, lbl_scores)
+        lbl_nomJ.Text = $"{joueur.GetNom()} a choisi : {joueur.GetChoix()}"
     End Sub
 End Class
