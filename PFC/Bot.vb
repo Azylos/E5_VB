@@ -1,9 +1,9 @@
 ﻿Imports PFC.PFCgame
 
 Public Class Bot
-    Public Property Nom As String
+    Inherits Entite
     Public Sub New(nom As String)
-        Me.Nom = nom
+        MyBase.New(nom)
     End Sub
     Public Function ChoisirCoup() As Choix
         Dim aleatoire As New Random()
