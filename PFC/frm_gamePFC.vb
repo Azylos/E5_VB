@@ -1,4 +1,5 @@
-﻿Imports System.Reflection.Emit
+﻿Imports System.IO
+Imports System.Reflection.Emit
 Imports PFC.PFCgame
 
 Public Class frm_gamePFC
@@ -47,5 +48,27 @@ Public Class frm_gamePFC
         joueur.Choisir(Choix.Ciseaux)
         Jeu.JouerCoupJoueur(joueur.GetChoix(), joueur, Bot, lbl_nomBot, lbl_resultat, lbl_scores)
         lbl_nomJ.Text = $"{joueur.GetNom()} a choisi : {joueur.GetChoix()}"
+    End Sub
+    Private Sub frm_gamePFC_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        ' Sauvegarder les scores avant de fermer l'application
+        SauvegarderScores(joueur, Bot)
+    End Sub
+    Private Sub SauvegarderScores(joueur As Joueur, bot As Bot)
+        Dim scoresFilePath = Path.Combine(Path.Combine(Path.Combine(Application.StartupPath, "..\..\.."), "data_scores"), "scores.csv")
+
+        ' Vérifier si le fichier existe
+        If Not File.Exists(scoresFilePath) Then
+            ' Créer le fichier s'il n'existe pas
+            Using writer As New StreamWriter(scoresFilePath)
+                ' Écrire l'en-tête du fichier CSV si nécessaire
+                writer.WriteLine("Date, Nom Joueur, Score Joueur, Nom Bot, Score Bot")
+            End Using
+        End If
+
+        ' Ouvrir le fichier en mode ajout
+        Using writer As New StreamWriter(scoresFilePath, True)
+            ' Écrire la nouvelle ligne de score
+            writer.WriteLine($"{DateTime.Now},{joueur.GetNom()},{joueur.GetScore()},{bot.GetNom()},{bot.GetScore()}")
+        End Using
     End Sub
 End Class
